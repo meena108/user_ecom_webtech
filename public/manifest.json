@@ -1,13 +1,14 @@
 {
   "short_name": "Easy Ecommerce",
   "name": "Easy Ecommerce",
-  "decription": "Easy Ecommerce System",
+  "description": "Easy Ecommerce System",
   "lang": "en-US",
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#002e62",
-  "orientation": "potrait",
+  "orientation": "portrait",
   "background_color": "#ffffff",
+  "scope": "/",
   "icons": [
     {
       "src": "72.png",
