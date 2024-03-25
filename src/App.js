@@ -1,15 +1,17 @@
-import React, { Component } from 'react'
-import{Button} from "react-bootstrap";
+import React, { Fragment } from 'react';
+import { BrowserRouter } from 'react-router-dom'; // Correct import statement
+import AppRoute from './route/AppRoute';
 
-export class App extends Component {
+class App extends React.Component { // Ensure you're extending React.Component instead of Component
   render() {
     return (
-      <div>
-        <Button variant="warning">Warning</Button>
-        <Button variant="info"><i className="fa fa-home"></i></Button>
-      </div>
-    )
+      <Fragment>
+        <BrowserRouter>
+          <AppRoute />
+        </BrowserRouter>
+      </Fragment>
+    );
   }
 }
 
-export default App
+export default App;
