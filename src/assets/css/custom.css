@@ -9,8 +9,9 @@
 @import "NavMenuMobile.css";
 @import "Footer.css";
 @import "typo.css";
-
+@import "megaMenuMobile.css";
+@import "responsive.css";
 
 body {
-    background-color: white;
+  background-color: white;
 }
