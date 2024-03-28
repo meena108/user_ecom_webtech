@@ -1,13 +1,15 @@
 @media (max-width: 374.98px) {
   .Mobile {
+    /* Styles for Mobile when width is <= 374.98px */
   }
   .Desktop {
     display: none;
   }
 }
 
-@media (min-width: 375.98px) and (max-width: 575.98px) {
+@media (min-width: 375px) and (max-width: 575.98px) {
   .Mobile {
+    /* Styles for Mobile when width is between 375px and 575.98px */
   }
   .Desktop {
     display: none;
@@ -16,6 +18,7 @@
 
 @media (min-width: 576px) and (max-width: 767.98px) {
   .Mobile {
+    /* Styles for Mobile when width is between 576px and 767.98px */
   }
   .Desktop {
     display: none;
@@ -27,6 +30,7 @@
     display: none;
   }
   .Desktop {
+    /* Styles for Desktop when width is between 768px and 991.98px */
   }
 }
 
@@ -35,6 +39,7 @@
     display: none;
   }
   .Desktop {
+    /* Styles for Desktop when width is between 992px and 1199.98px */
   }
 }
 
@@ -43,5 +48,6 @@
     display: none;
   }
   .Desktop {
+    /* Styles for Desktop when width is >= 1200px */
   }
 }

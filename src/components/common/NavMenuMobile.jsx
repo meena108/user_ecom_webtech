@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Navbar, Container, Row, Col, Button } from "react-bootstrap";
 import Logo from "../../assets/images/easyshop.png";
 import { Link } from "react-router-dom";
@@ -63,7 +63,9 @@ class NavMenuMobile extends Component {
             </Row>
           </Container>
 
-          <div className={this.state.SideNavState}>sdfsdf</div>
+          <div className={this.state.SideNavState}>
+            <MegaMenuMobile />
+          </div>
 
           <div
             onClick={this.ContentOverlayClickHandler}
