@@ -1,87 +1,114 @@
 import React, { Component, Fragment } from "react";
-import{Container, Row, Col, Card} from 'react-bootstrap';
+import { Container, Row, Col, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-
-class FeaturedProduct extends Component {
+class FeaturedProducts extends Component {
   render() {
     return (
       <Fragment>
-        <Container className="text-center" fluid = {true}>
+        <Container className="text-center" fluid={true}>
           <div className="section-title text-center mb-55">
             <h2>FEATURED PRODUCT</h2>
-            <p>Some of Our Exclusive Collection, You may like</p>
+            <p>Some Of Our Exclusive Collection, You May Like</p>
           </div>
 
           <Row>
-
-            <Col className="p-1"  key = {1} xl = {2} lg = {2}  md = {2} sm = {4} xs = {6}>
-            <Card className="image-box card">
-              <img className="center" src="https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/9/i/h/-original-imagt4tdvvhyag9j.jpeg?q=70&crop=false" alt=""/>
-            <Card.Body>
-            <p className="product-name-on-card">Poco C21(Cross balck 128 GB)</p>
-             <p className="product-price-on-card">Price: $130</p>
-            </Card.Body>
-            </Card>
+            <Col className="p-1" key={1} xl={2} lg={2} md={2} sm={4} xs={6}>
+              <Link to="/productdetails">
+                <Card className="image-box card">
+                  <img
+                    className="center"
+                    src="https://rukminim1.flixcart.com/image/416/416/kn7sdjk0/mobile/q/j/x/c21-rmx3201-realme-original-imagfxfwbszrxkvu.jpeg?q=70"
+                  />
+                  <Card.Body>
+                    <p className="product-name-on-card">
+                      Realme C21 (Cross Black, 64 GB)
+                    </p>
+                    <p className="product-price-on-card">Price : $120</p>
+                  </Card.Body>
+                </Card>
+              </Link>
             </Col>
 
-            <Col className="p-1"  key = {1} xl = {2} lg = {2}  md = {2} sm = {4} xs = {6}>
-            <Card className="image-box card">
-              <img className="center" src="https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/m/o/y/g34-5g-pb1v0000in-motorola-original-imagwu4s8naevwyq.jpeg?q=70&crop=false"/>
-            <Card.Body>
-            <p className="product-name-on-card">Poco C21(Cross balck 128 GB)</p>
-             <p className="product-price-on-card">Price: $130</p>
-            </Card.Body>
-            </Card>
+            <Col className="p-1" key={1} xl={2} lg={2} md={2} sm={4} xs={6}>
+              <Card className="image-box card">
+                <img
+                  className="center"
+                  src="https://rukminim1.flixcart.com/image/416/416/knm2s280/mobile/j/x/c/hot-10-play-x688b-infinix-original-imag29gxqzuxkmnk.jpeg?q=70"
+                />
+                <Card.Body>
+                  <p className="product-name-on-card">
+                    Realme C21 (Cross Blue, 64 GB)
+                  </p>
+                  <p className="product-price-on-card">Price : $120</p>
+                </Card.Body>
+              </Card>
             </Col>
 
-            <Col className="p-1"  key = {1} xl = {2} lg = {2}  md = {2} sm = {4} xs = {6}>
-            <Card className="image-box card">
-              <img className="center" src="https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/d/w/j/g24-pb1c0000in-motorola-original-imagxm3afhhxpqz9.jpeg?q=70" alt=""/>
-            <Card.Body>
-            <p className="product-name-on-card">Poco C21(Cross balck 128 GB)</p>
-             <p className="product-price-on-card">Price: $130</p>
-            </Card.Body>
-            </Card>
+            <Col className="p-1" key={1} xl={2} lg={2} md={2} sm={4} xs={6}>
+              <Card className="image-box card">
+                <img
+                  className="center"
+                  src="https://rukminim1.flixcart.com/image/416/416/kn7sdjk0/mobile/g/r/g/c21-rmx3201-realme-original-imagfxfwn9aryyda.jpeg?q=70"
+                />
+                <Card.Body>
+                  <p className="product-name-on-card">
+                    Realme C21 (Cross Black, 64 GB)
+                  </p>
+                  <p className="product-price-on-card">Price : $120</p>
+                </Card.Body>
+              </Card>
             </Col>
 
-            <Col className="p-1"  key = {1} xl = {2} lg = {2}  md = {2} sm = {4} xs = {6}>
-            <Card className="image-box card">
-              <img className="center" src="https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/4/h/e/-original-imagzjhwmsamexfk.jpeg?q=70" alt=""/>
-            <Card.Body>
-            <p className="product-name-on-card">Poco C21(Cross balck 128 GB)</p>
-             <p className="product-price-on-card">Price: $130</p>
-            </Card.Body>
-            </Card>
+            <Col className="p-1" key={1} xl={2} lg={2} md={2} sm={4} xs={6}>
+              <Card className="image-box card">
+                <img
+                  className="center"
+                  src="https://rukminim1.flixcart.com/image/416/416/knm2s280/mobile/v/l/u/hot-10-play-x688b-infinix-original-imag29hfaedkgdfe.jpeg?q=70"
+                />
+                <Card.Body>
+                  <p className="product-name-on-card">
+                    Realme C21 (Cross Black, 64 GB)
+                  </p>
+                  <p className="product-price-on-card">Price : $120</p>
+                </Card.Body>
+              </Card>
             </Col>
 
-            <Col className="p-1"  key = {1} xl = {2} lg = {2}  md = {2} sm = {4} xs = {6}>
-            <Card className="image-box card">
-              <img className="center" src="https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/k/u/n/-original-imagzjhwtfthcmzz.jpeg?q=70" alt=""/>
-            <Card.Body>
-            <p className="product-name-on-card">Poco C21(Cross balck 128 GB)</p>
-             <p className="product-price-on-card">Price: $130</p>
-            </Card.Body>
-            </Card>
+            <Col className="p-1" key={1} xl={2} lg={2} md={2} sm={4} xs={6}>
+              <Card className="image-box card">
+                <img
+                  className="center"
+                  src="https://rukminim1.flixcart.com/image/416/416/knrsjgw0/mobile/f/o/w/8-5g-rmx3241-realme-original-imag2d8eksc2szzy.jpeg?q=70"
+                />
+                <Card.Body>
+                  <p className="product-name-on-card">
+                    Realme C21 (Cross Black, 64 GB)
+                  </p>
+                  <p className="product-price-on-card">Price : $120</p>
+                </Card.Body>
+              </Card>
             </Col>
 
-            <Col className="p-1"  key = {1} xl = {2} lg = {2}  md = {2} sm = {4} xs = {6}>
-            <Card className="image-box card">
-              <img className="center" src="https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/9/i/h/-original-imagt4tdvvhyag9j.jpeg?q=70&crop=false" alt=""/>
-            <Card.Body>
-            <p className="product-name-on-card">Poco C21(Cross balck 128 GB)</p>
-             <p className="product-price-on-card">Price: $130</p>
-            </Card.Body>
-            </Card>
+            <Col className="p-1" key={1} xl={2} lg={2} md={2} sm={4} xs={6}>
+              <Card className="image-box card">
+                <img
+                  className="center"
+                  src="https://rukminim1.flixcart.com/image/416/416/kd69z0w0/mobile/a/n/g/mi-redmi-note-9-b086982zkf-original-imafu4qf8gfcutde.jpeg?q=70"
+                />
+                <Card.Body>
+                  <p className="product-name-on-card">
+                    Realme C21 (Cross Black, 64 GB)
+                  </p>
+                  <p className="product-price-on-card">Price : $120</p>
+                </Card.Body>
+              </Card>
             </Col>
-
-
-
           </Row>
-
         </Container>
       </Fragment>
     );
   }
 }
 
-export default FeaturedProduct;
+export default FeaturedProducts;
