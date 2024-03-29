@@ -16,7 +16,7 @@ export class Purchase extends Component {
             >
               <h4 className="section-title-login">Purchase Page </h4>
               <p className="section-title-contact">
-                Hi! I'm Kazi Ariyan. I'm a web developer with a serious love for
+                Hi! I'm Meena Chand. I'm a web developer with a serious love for
                 teaching I am a founder of eLe easy Learning and a passionate
                 Web Developer, Programmer & Instructor.<br></br>
                 <br></br>I am working online for the last 7 years and have
