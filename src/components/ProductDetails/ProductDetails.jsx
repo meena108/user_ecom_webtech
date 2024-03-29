@@ -4,11 +4,12 @@ import Product1 from "../../assets/images/product/product1.png";
 import Product2 from "../../assets/images/product/product2.png";
 import Product3 from "../../assets/images/product/product3.png";
 import Product4 from "../../assets/images/product/product4.png";
+import SuggestedProduct from "./SuggestedProduct";
 class ProductDetails extends Component {
   render() {
     return (
       <Fragment>
-        <Container className="BetweenTwoSection">
+        <Container fluid={true} className="BetweenTwoSection">
           <Row className="p-2">
             <Col
               className="shadow-sm bg-white pb-3 mt-4"
