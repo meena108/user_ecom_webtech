@@ -94,7 +94,6 @@ class Notification extends Component {
             </Col>
           </Row>
         </Container>
-
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <h6>
