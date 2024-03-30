@@ -83,6 +83,9 @@ class NavMenuDesktop extends Component {
                   <Link to="/login" className="h4 btn">
                     LOGIN
                   </Link>
+                  <Link to="/cart" className="cart-btn">
+                    <i className="fa fa-shopping-cart"></i> 3 Items{" "}
+                  </Link>
 
                   <Button className="cart-btn">
                     <i className="fa fa-shopping-cart"></i> 3 Items{" "}
