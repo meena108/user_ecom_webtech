@@ -1,5 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import validation from "../../validation/validation";
+
+import axios from "axios";
+import AppUrl from "../../api/AppUrl";
 
 export class Contact extends Component {
   constructor() {
@@ -13,25 +17,57 @@ export class Contact extends Component {
 
   nameOnChange = (event) => {
     let name = event.target.value;
-    //alert(name);
+    // alert(name);
     this.setState({ name: name });
   };
 
   emailOnChange = (event) => {
     let email = event.target.value;
-    //alert(email);
+    // alert(email);
     this.setState({ email: email });
   };
+
   messageOnChange = (event) => {
     let message = event.target.value;
-    //alert(message);
+    // alert(message);
     this.setState({ message: message });
   };
 
-  onFormSubmit(event) {
-    alert("hello");
+  onFormSubmit = (event) => {
+    let name = this.state.name;
+    let email = this.state.email;
+    let message = this.state.message;
+
+    if (message.length == 0) {
+      alert("Please write your message");
+    } else if (name.length == 0) {
+      alert("Please write down our name");
+    } else if (email.length == 0) {
+      alert("Please write down our Email");
+    } else if (!validation.NameRegx.test(name)) {
+      alert("Invaid Name");
+    } else {
+      let MyFormData = new FormData();
+      MyFormData.append("name", name);
+      MyFormData.append("email", email);
+      MyFormData.append("message", message);
+
+      axios
+        .post(AppUrl.PostContact, MyFormData)
+        .then(function (response) {
+          if (response.status == 200 && response.data == 1) {
+            alert("Message Send Successfully");
+          } else {
+            alert("error");
+          }
+        })
+        .catch(function (error) {
+          alert(error);
+        });
+    }
+
     event.preventDefault();
-  }
+  };
 
   render() {
     return (
@@ -58,6 +94,7 @@ export class Contact extends Component {
                     <h6 className="section-sub-title">
                       Please Contact With Us{" "}
                     </h6>
+
                     <input
                       onChange={this.nameOnChange}
                       className="form-control m-2"
@@ -79,6 +116,7 @@ export class Contact extends Component {
                       rows={3}
                       placeholder="Message"
                     />
+
                     <Button
                       type="submit"
                       className="btn btn-block m-2 site-btn-login"
