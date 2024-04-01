@@ -37,6 +37,7 @@ export class Contact extends Component {
     let name = this.state.name;
     let email = this.state.email;
     let message = this.state.message;
+    let sendBtn = document.getElementById("sendBtn");
 
     if (message.length == 0) {
       alert("Please write your message");
@@ -47,6 +48,7 @@ export class Contact extends Component {
     } else if (!validation.NameRegx.test(name)) {
       alert("Invaid Name");
     } else {
+      sendBtn.innerHTML = "Sending...";
       let MyFormData = new FormData();
       MyFormData.append("name", name);
       MyFormData.append("email", email);
@@ -57,12 +59,15 @@ export class Contact extends Component {
         .then(function (response) {
           if (response.status == 200 && response.data == 1) {
             alert("Message Send Successfully");
+            sendBtn.innerHTML = "Send";
           } else {
             alert("error");
+            sendBtn.innerHTML = "Send";
           }
         })
         .catch(function (error) {
           alert(error);
+          sendBtn.innerHTML = "Send";
         });
     }
 
@@ -118,11 +123,11 @@ export class Contact extends Component {
                     />
 
                     <Button
+                      id="sendBtn"
                       type="submit"
                       className="btn btn-block m-2 site-btn-login"
                     >
-                      {" "}
-                      Send{" "}
+                      Send
                     </Button>
                   </Form>
                 </Col>
