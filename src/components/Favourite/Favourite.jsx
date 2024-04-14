@@ -1,97 +1,97 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 
 class Favourite extends Component {
+  state = {
+    products: [],
+    isLoading: true,
+    error: null,
+  };
+
+  componentDidMount() {
+    this.fetchProducts();
+  }
+
+  fetchProducts = () => {
+    fetch("http://127.0.0.1:8000/api/list")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => this.setState({ products: data, isLoading: false }))
+      .catch((error) => this.setState({ error, isLoading: false }));
+  };
+
+  delete = (id) => {
+    fetch(`http://127.0.0.1:8000/api/delete/${id}`, {
+      method: "DELETE",
+    }).then(() => this.fetchProducts());
+  };
+
   render() {
+    const { products, isLoading, error } = this.state;
+
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    }
+
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+
     return (
-      <Fragment>
-        <Container className="text-center" fluid={true}>
-          <div className="section-title text-center mb-55">
-            <h2> MY FAVOURITE ITEMS</h2>
-            <p>Some Of Our Exclusive Collection, You May Like</p>
-          </div>
+      <Container className="text-center" fluid>
+        <div className="section-title text-center mb-55">
+          <h2>MY PRODUCT LIST ITEMS</h2>
+          <p>Some Of Our Exclusive Collection, You May Like</p>
+        </div>
 
-          <Row>
-            <Col className="p-0" xl={3} lg={3} md={3} sm={6} xs={6}>
+        <Row>
+          {products.map((product) => (
+            <Col key={product.id} xl={3} lg={3} md={3} sm={6} xs={6}>
               <Card className="image-box card w-100">
                 <img
+                  alt={`Product ${product.name}`}
                   className="center w-75"
-                  src="https://rukminim1.flixcart.com/image/800/960/kf1fo280hlty2aw-0/t-shirt/w/s/e/-original-imafdfvvr8hqdu65.jpeg?q=50"
+                  src={`http://127.0.0.1:8000/storage/${product.file_path}`}
                 />
                 <Card.Body>
-                  <p className="product-name-on-card">
-                    Striped Men Hooded Neck Red
+                  <h5 className="product-name-on-card">{product.name}</h5>
+                  <p className="product-id-on-card">ID: {product.id}</p>
+                  <p className="product-description-on-card">
+                    {product.description}
                   </p>
-                  <p className="product-price-on-card">Price : $120</p>
-                  <Button className="btn btn-sm">
-                    {" "}
-                    <i className="fa fa-trash-alt"></i> Remove{" "}
-                  </Button>
+                  <p className="product-price-on-card">
+                    Price: ${product.price}
+                  </p>
+                  <div className="d-flex justify-content-center">
+                    <Button
+                      className="btn btn-sm me-2"
+                      onClick={() => this.delete(product.id)}
+                    >
+                      <i className="fa fa-trash-alt"></i> Remove
+                    </Button>
+
+                    <Button
+                      className="btn btn-sm"
+                      onClick={() =>
+                        this.props.history.push(`/notification/${product.id}`)
+                      }
+                    >
+                      <i className="fa fa-edit"></i> Update
+                    </Button>
+                  </div>
                 </Card.Body>
               </Card>
             </Col>
-
-            <Col className="p-0" xl={3} lg={3} md={3} sm={6} xs={6}>
-              <Card className="image-box card w-100">
-                <img
-                  className="center w-75"
-                  src="https://rukminim1.flixcart.com/image/800/960/keykscw0-0/t-shirt/l/d/q/3xl-bmrgyrnful-z12-blive-original-imafvgzkyjghf7ba.jpeg?q=50"
-                />
-                <Card.Body>
-                  <p className="product-name-on-card">
-                    Striped Men Round Neck Maroon, Grey
-                  </p>
-                  <p className="product-price-on-card">Price : $120</p>
-                  <Button className="btn btn-sm">
-                    {" "}
-                    <i className="fa fa-trash-alt"></i> Remove{" "}
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col className="p-0" xl={3} lg={3} md={3} sm={6} xs={6}>
-              <Card className="image-box card w-100">
-                <img
-                  className="center w-75"
-                  src="https://rukminim1.flixcart.com/image/800/960/jt4olu80/t-shirt/v/7/v/xl-t-shirt-0068-eg-original-imafejrfpzjkxvkq.jpeg?q=50"
-                />
-                <Card.Body>
-                  <p className="product-name-on-card">
-                    Color Block Men Round Neck Grey
-                  </p>
-                  <p className="product-price-on-card">Price : $120</p>
-                  <Button className="btn btn-sm">
-                    {" "}
-                    <i className="fa fa-trash-alt"></i> Remove{" "}
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col className="p-0" xl={3} lg={3} md={3} sm={6} xs={6}>
-              <Card className="image-box card w-100">
-                <img
-                  className="center w-75"
-                  src="https://rukminim1.flixcart.com/image/800/960/kljrvrk0/t-shirt/q/r/0/l-trdhdful-d32-tripr-original-imagynnpg2fh62ht.jpeg?q=50"
-                />
-                <Card.Body>
-                  <p className="product-name-on-card">
-                    Printed Men Hooded Neck Red T-Shirt
-                  </p>
-                  <p className="product-price-on-card">Price : $120</p>
-                  <Button className="btn btn-sm">
-                    {" "}
-                    <i className="fa fa-trash-alt"></i> Remove{" "}
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
-      </Fragment>
+          ))}
+        </Row>
+      </Container>
     );
   }
 }
 
-export default Favourite;
+export default withRouter(Favourite);

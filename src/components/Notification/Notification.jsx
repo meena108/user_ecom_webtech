@@ -1,123 +1,137 @@
 import React, { Component, Fragment } from "react";
-import { Container, Row, Col, Card, Button, Modal } from "react-bootstrap";
-class Notification extends Component {
-  constructor() {
-    super();
-    this.state = {
-      show: false,
-    };
-  }
+import { Container, Form, Button } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+import axios from "axios";
 
-  handleClose = () => {
-    this.setState({ show: false });
+class Notification extends Component {
+  state = {
+    product: {
+      name: "",
+      description: "",
+      price: "",
+      file_path: null,
+    },
+    selectedFile: null,
   };
 
-  handleShow = () => {
-    this.setState({ show: true });
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    axios
+      .get(`http://127.0.0.1:8000/api/product/${id}`)
+      .then((response) => {
+        this.setState({ product: response.data });
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  }
+
+  handleInputChange = (event) => {
+    const { name, value } = event.target;
+    this.setState((prevState) => ({
+      product: {
+        ...prevState.product,
+        [name]: value,
+      },
+    }));
+  };
+
+  handleFileChange = (event) => {
+    this.setState({
+      selectedFile: event.target.files[0],
+    });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const id = this.props.match.params.id;
+
+    const formData = new FormData();
+    Object.keys(this.state.product).forEach((key) =>
+      formData.append(key, this.state.product[key])
+    );
+    if (this.state.selectedFile) {
+      formData.append("file_path", this.state.selectedFile);
+    }
+
+    axios
+      .put(`http://127.0.0.1:8000/api/product/${id}`, formData)
+      .then((response) => {
+        console.log(response.data);
+        this.props.history.push("/product-list");
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
   };
 
   render() {
+    const { product } = this.state;
+
     return (
       <Fragment>
-        <Container className="TopSection">
-          <Row>
-            <Col className=" p-1 " md={6} lg={6} sm={12} xs={12}>
-              <Card onClick={this.handleShow} className="notification-card">
-                <Card.Body>
-                  <h6> Lorem Ipsum is simply dummy text of the printing</h6>
-                  <p className="py-1  px-0 text-primary m-0">
-                    <i className="fa  fa-bell"></i> Date: 22/12/2010 | Status:
-                    Unread
-                  </p>
-                </Card.Body>
-              </Card>
-            </Col>
+        <h1>UPDATED ITEMS</h1>
+        <Container>
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Group controlId="productName">
+              <Form.Label>Product Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={product.name}
+                onChange={this.handleInputChange}
+              />
+            </Form.Group>
 
-            <Col className=" p-1 " md={6} lg={6} sm={12} xs={12}>
-              <Card onClick={this.handleShow} className="notification-card">
-                <Card.Body>
-                  <h6> Lorem Ipsum is simply dummy text of the printing</h6>
-                  <p className="py-1   px-0 text-primary m-0">
-                    <i className="fa  fa-bell"></i> Date: 22/12/2010 | Status:
-                    Unread
-                  </p>
-                </Card.Body>
-              </Card>
-            </Col>
+            <Form.Group controlId="productDescription">
+              <Form.Label>Product Description</Form.Label>
+              <Form.Control
+                type="text"
+                name="description"
+                value={product.description}
+                onChange={this.handleInputChange}
+              />
+            </Form.Group>
 
-            <Col className="p-1" md={6} lg={6} sm={12} xs={12}>
-              <Card className="notification-card">
-                <Card.Body>
-                  <h6> Lorem Ipsum is simply dummy text of the printing</h6>
-                  <p className="py-1  px-0 text-success m-0">
-                    <i className="fa  fa-bell"></i> Date: 22/12/2010 | Status:
-                    Read
-                  </p>
-                </Card.Body>
-              </Card>
-            </Col>
+            <Form.Group controlId="productPrice">
+              <Form.Label>Product Price</Form.Label>
+              <Form.Control
+                type="number"
+                name="price"
+                value={product.price}
+                onChange={this.handleInputChange}
+              />
+            </Form.Group>
 
-            <Col className="p-1" md={6} lg={6} sm={12} xs={12}>
-              <Card className="notification-card">
-                <Card.Body>
-                  <h5> Lorem Ipsum is simply dummy text of the printing</h5>
-                  <p className="py-1  px-0 text-success m-0">
-                    <i className="fa fa-bell"></i> Date: 22/12/2010 | Status:
-                    Read
-                  </p>
-                </Card.Body>
-              </Card>
-            </Col>
+            <Form.Group controlId="productFilePath">
+              <Form.Label>Product Image</Form.Label>
+              <Form.Control
+                type="file"
+                name="file_path"
+                onChange={this.handleFileChange}
+              />
+            </Form.Group>
 
-            <Col className="p-1" md={6} lg={6} sm={12} xs={12}>
-              <Card className="notification-card">
-                <Card.Body>
-                  <h6> Lorem Ipsum is simply dummy text of the printing</h6>
-                  <p className="py-1  px-0 text-success m-0">
-                    <i className="fa  fa-bell"></i> Date: 22/12/2010 | Status:
-                    Read
-                  </p>
-                </Card.Body>
-              </Card>
-            </Col>
+            {product.file_path && (
+              <div className="text-center my-3">
+                <img
+                  src={`http://127.0.0.1:8000/storage/${product.file_path}`} // Ensure the path is correct
+                  alt="Product"
+                  style={{ width: "100px", height: "100px" }}
+                />
+              </div>
+            )}
 
-            <Col className="p-1" md={6} lg={6} sm={12} xs={12}>
-              <Card className="notification-card">
-                <Card.Body>
-                  <h6> Lorem Ipsum is simply dummy text of the printing</h6>
-                  <p className="py-1 px-0 text-success m-0">
-                    <i className="fa  fa-bell"></i> Date: 22/12/2010 | Status:
-                    Read
-                  </p>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
+            <div className="d-flex justify-content-center mt-4">
+              <Button variant="primary" type="submit">
+                Update Product
+              </Button>
+            </div>
+          </Form>
         </Container>
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <h6>
-              <i className="fa fa-bell"></i> Date:11/05/2021
-            </h6>
-          </Modal.Header>
-          <Modal.Body>
-            <h6>Woohoo, you're reading this text in a modal!</h6>
-            <p>
-              Each course has been hand-tailored to teach a specific skill. I
-              hope you agree! Whether you’re trying to learn a new skill from
-              scratch or want to refresh your memory on something you’ve learned
-              in the past, you’ve come to the right place.
-            </p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
       </Fragment>
     );
   }
 }
 
-export default Notification;
+export default withRouter(Notification);
