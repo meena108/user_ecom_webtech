@@ -7,14 +7,28 @@ class Favourite extends Component {
     products: [],
     isLoading: true,
     error: null,
+    searchKey: "",
   };
 
   componentDidMount() {
     this.fetchProducts();
   }
 
-  fetchProducts = () => {
-    fetch("http://127.0.0.1:8000/api/list")
+  handleSearch = (event) => {
+    const searchKey = event.target.value;
+    this.setState({ searchKey });
+
+    if (searchKey.length >= 2) {
+      this.fetchProducts(searchKey);
+    }
+  };
+
+  fetchProducts = (searchKey = "") => {
+    const url = searchKey
+      ? `http://127.0.0.1:8000/api/search/${searchKey}`
+      : "http://127.0.0.1:8000/api/list";
+
+    fetch(url)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -48,6 +62,31 @@ class Favourite extends Component {
           <h2>MY PRODUCT LIST ITEMS</h2>
           <p>Some Of Our Exclusive Collection, You May Like</p>
         </div>
+        <br />
+
+        <div className="d-flex justify-content-center">
+          <div className="input-group mb-3 search-width">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search products..."
+              aria-label="Search products..."
+              aria-describedby="button-addon2"
+              value={this.state.searchKey}
+              onChange={this.handleSearch}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                id="button-addon2"
+              >
+                <i className="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <br />
 
         <Row>
           {products.map((product) => (

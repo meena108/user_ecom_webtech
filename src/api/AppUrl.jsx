@@ -3,6 +3,10 @@ class AppUrl {
   static VisitorDetails = this.BaseURL + "/getVisitor";
 
   static PostContact = this.BaseURL + "/postcontact";
+
+  static search(searchkey) {
+    return this.BaseURL + "/search/" + searchkey;
+  }
 }
 
 export default AppUrl;

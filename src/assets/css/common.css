@@ -34,3 +34,8 @@ body {
 .Link:hover {
   text-decoration: none !important;
 }
+
+.search-width {
+  max-width: 50%; /* Adjust this value to your liking */
+  width: 100%;
+}
