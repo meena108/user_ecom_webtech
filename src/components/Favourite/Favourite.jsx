@@ -14,20 +14,10 @@ class Favourite extends Component {
     this.fetchProducts();
   }
 
-  handleSearch = (event) => {
-    const searchKey = event.target.value;
-    this.setState({ searchKey });
-
-    if (searchKey.length >= 2) {
-      this.fetchProducts(searchKey);
-    }
-  };
-
   fetchProducts = (searchKey = "") => {
     const url = searchKey
       ? `http://127.0.0.1:8000/api/search/${searchKey}`
       : "http://127.0.0.1:8000/api/list";
-
     fetch(url)
       .then((response) => {
         if (!response.ok) {
@@ -40,30 +30,25 @@ class Favourite extends Component {
   };
 
   delete = (id) => {
-    fetch(`http://127.0.0.1:8000/api/delete/${id}`, {
-      method: "DELETE",
-    }).then(() => this.fetchProducts());
+    fetch(`http://127.0.0.1:8000/api/delete/${id}`, { method: "DELETE" })
+      .then(() => this.fetchProducts())
+      .catch((error) => console.error("Error:", error));
   };
 
   render() {
     const { products, isLoading, error } = this.state;
-
     if (error) {
       return <div>Error: {error.message}</div>;
     }
-
     if (isLoading) {
       return <div>Loading...</div>;
     }
-
     return (
       <Container className="text-center" fluid>
         <div className="section-title text-center mb-55">
           <h2>MY PRODUCT LIST ITEMS</h2>
           <p>Some Of Our Exclusive Collection, You May Like</p>
         </div>
-        <br />
-
         <div className="d-flex justify-content-center">
           <div className="input-group mb-3 search-width">
             <input
@@ -73,21 +58,20 @@ class Favourite extends Component {
               aria-label="Search products..."
               aria-describedby="button-addon2"
               value={this.state.searchKey}
-              onChange={this.handleSearch}
+              onChange={(e) => this.setState({ searchKey: e.target.value })}
             />
             <div className="input-group-append">
-              <button
+              <Button
                 className="btn btn-outline-secondary"
                 type="button"
                 id="button-addon2"
+                onClick={() => this.fetchProducts(this.state.searchKey)}
               >
                 <i className="fa fa-search"></i>
-              </button>
+              </Button>
             </div>
           </div>
         </div>
-        <br />
-
         <Row>
           {products.map((product) => (
             <Col key={product.id} xl={3} lg={3} md={3} sm={6} xs={6}>
@@ -113,7 +97,6 @@ class Favourite extends Component {
                     >
                       <i className="fa fa-trash-alt"></i> Remove
                     </Button>
-
                     <Button
                       className="btn btn-sm"
                       onClick={() =>

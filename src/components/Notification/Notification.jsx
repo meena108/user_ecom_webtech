@@ -45,20 +45,19 @@ class Notification extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const id = this.props.match.params.id;
-
     const formData = new FormData();
     Object.keys(this.state.product).forEach((key) =>
       formData.append(key, this.state.product[key])
     );
     if (this.state.selectedFile) {
-      formData.append("file_path", this.state.selectedFile);
+      formData.append("file", this.state.selectedFile);
     }
 
     axios
-      .put(`http://127.0.0.1:8000/api/product/${id}`, formData)
+      .put(`http://127.0.0.1:8000/api/update/${id}`, formData)
       .then((response) => {
         console.log(response.data);
-        this.props.history.push("/product-list");
+        this.props.history.push("/favourite"); // Redirect to the favourite page after update
       })
       .catch((error) => {
         console.error("There was an error!", error);
@@ -70,7 +69,7 @@ class Notification extends Component {
 
     return (
       <Fragment>
-        <h1>UPDATED ITEMS</h1>
+        <h1>Update Product</h1>
         <Container>
           <Form onSubmit={this.handleSubmit}>
             <Form.Group controlId="productName">
@@ -107,7 +106,7 @@ class Notification extends Component {
               <Form.Label>Product Image</Form.Label>
               <Form.Control
                 type="file"
-                name="file_path"
+                name="file"
                 onChange={this.handleFileChange}
               />
             </Form.Group>
@@ -115,7 +114,7 @@ class Notification extends Component {
             {product.file_path && (
               <div className="text-center my-3">
                 <img
-                  src={`http://127.0.0.1:8000/storage/${product.file_path}`} // Ensure the path is correct
+                  src={`http://127.0.0.1:8000/storage/${product.file_path}`}
                   alt="Product"
                   style={{ width: "100px", height: "100px" }}
                 />
