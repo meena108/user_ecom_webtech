@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { Navbar, Container, Row, Col, Button } from "react-bootstrap";
 import Logo from "../../assets/images/easyshop.png";
 import { Link } from "react-router-dom";
-import MegaMenuMobile from "../home/MegaMenuMobile";
 
 class NavMenuMobile extends Component {
   constructor() {
@@ -47,25 +46,36 @@ class NavMenuMobile extends Component {
           >
             <Row>
               <Col lg={4} md={4} sm={12} xs={12}>
-                <Button onClick={this.MenuBarClickHandler} className="btn">
-                  <i className="fa fa-bars"></i>{" "}
-                </Button>
-
                 <Link to="/">
                   {" "}
                   <img className="nav-logo" src={Logo} />{" "}
                 </Link>
+              </Col>
+              <Col className="p-1 mt-1" lg={4} md={4} sm={12} xs={12}>
+                <Link to="/favourite" className="btn">
+                  <i className="fa h4 fa-shopping-cart"></i>
+                  <sup>
+                    <span className="badge text-white bg-danger">3</span>
+                  </sup>
+                </Link>
 
-                <Button className="cart-btn">
-                  <i className="fa fa-shopping-cart"></i> 3 Items{" "}
-                </Button>
+                <Link to="/notification" className="btn">
+                  <i className="fa h4 fa-edit"></i>
+                  <sup>
+                    <span className="badge text-white bg-danger">5</span>
+                  </sup>
+                </Link>
+                <a className="btn">
+                  <i className="fa h4 fa-mobile-alt"></i>
+                </a>
+                <Link to="/login" className="h4 btn">
+                  LOGIN
+                </Link>
               </Col>
             </Row>
           </Container>
 
-          <div className={this.state.SideNavState}>
-            <MegaMenuMobile />
-          </div>
+          <div className={this.state.SideNavState}></div>
 
           <div
             onClick={this.ContentOverlayClickHandler}

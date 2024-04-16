@@ -69,8 +69,11 @@ class Notification extends Component {
 
     return (
       <Fragment>
-        <h1>Update Product</h1>
         <Container>
+          <div className="section-title text-center mb-55">
+            <h2>UPDATE PRODUCT</h2>
+            <p>Some Of Our Exclusive Collection, You May Add</p>
+          </div>
           <Form onSubmit={this.handleSubmit}>
             <Form.Group controlId="productName">
               <Form.Label>Product Name</Form.Label>

@@ -55,15 +55,16 @@ class FeaturedProducts extends Component {
       <Fragment>
         <Container className="text-center" fluid={true}>
           <div className="section-title text-center mb-55">
-            <h2>FEATURED PRODUCT</h2>
-            <p>Some Of Our Exclusive Collection, You May Like</p>
+            <h2>ADD PRODUCT</h2>
+            <p>Some Of Our Exclusive Collection, You May Add</p>
           </div>
 
           <Card className="mb-3">
             <Card.Body>
               <Form onSubmit={this.handleSubmit}>
-                <Row>
-                  <Col md={3}>
+                {/* Name Input */}
+                <Row className="mb-3 justify-content-center">
+                  <Col md={6}>
                     <Form.Group controlId="productName">
                       <Form.Label>Name</Form.Label>
                       <Form.Control
@@ -76,7 +77,11 @@ class FeaturedProducts extends Component {
                       />
                     </Form.Group>
                   </Col>
-                  <Col md={3}>
+                </Row>
+
+                {/* Price Input */}
+                <Row className="mb-3 justify-content-center">
+                  <Col md={6}>
                     <Form.Group controlId="productPrice">
                       <Form.Label>Price</Form.Label>
                       <Form.Control
@@ -89,7 +94,11 @@ class FeaturedProducts extends Component {
                       />
                     </Form.Group>
                   </Col>
-                  <Col md={3}>
+                </Row>
+
+                {/* Description Input */}
+                <Row className="mb-3 justify-content-center">
+                  <Col md={6}>
                     <Form.Group controlId="productDescription">
                       <Form.Label>Description</Form.Label>
                       <Form.Control
@@ -102,7 +111,11 @@ class FeaturedProducts extends Component {
                       />
                     </Form.Group>
                   </Col>
-                  <Col md={2}>
+                </Row>
+
+                {/* File Input */}
+                <Row className="mb-3 justify-content-center">
+                  <Col md={6}>
                     <Form.Group controlId="productFile">
                       <Form.Label>Product Image</Form.Label>
                       <Form.Control
@@ -113,12 +126,13 @@ class FeaturedProducts extends Component {
                       />
                     </Form.Group>
                   </Col>
-                  <Col
-                    md={1}
-                    className="d-flex align-items-end justify-content-center"
-                  >
+                </Row>
+
+                {/* Submit Button */}
+                <Row className="mb-3 justify-content-center">
+                  <Col md={6} className="d-flex justify-content-center">
                     <Button variant="primary" type="submit">
-                      Add
+                      Add Product
                     </Button>
                   </Col>
                 </Row>
