@@ -46,7 +46,7 @@ class Favourite extends Component {
     return (
       <Container className="text-center" fluid>
         <div className="section-title text-center mb-55">
-          <h2>MY PRODUCT LIST ITEMS</h2>
+          <h2>MY PRODUCT LIST ITEMss</h2>
           <p>Some Of Our Exclusive Collection, You May Like</p>
         </div>
         <div className="d-flex justify-content-center">
