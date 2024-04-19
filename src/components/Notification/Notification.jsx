@@ -12,6 +12,7 @@ class Notification extends Component {
       file_path: null,
     },
     selectedFile: null,
+    imagePreviewUrl: "",
   };
 
   componentDidMount() {
@@ -37,35 +38,86 @@ class Notification extends Component {
   };
 
   handleFileChange = (event) => {
-    this.setState({
-      selectedFile: event.target.files[0],
-    });
+    const file = event.target.files[0];
+    if (file) {
+      // Create a URL for the file
+      const imagePreviewUrl = URL.createObjectURL(file);
+
+      this.setState({
+        selectedFile: file,
+        imagePreviewUrl, // Store the URL in state for rendering
+      });
+    }
   };
+
+  componentWillUnmount() {
+    // Make sure to revoke the data uris to avoid memory leaks
+    URL.revokeObjectURL(this.state.imagePreviewUrl);
+  }
 
   handleSubmit = (event) => {
     event.preventDefault();
+    const { name, description, price } = this.state.product;
+    console.log("Product state:", name); // Debug: Log state
     const id = this.props.match.params.id;
     const formData = new FormData();
-    Object.keys(this.state.product).forEach((key) =>
-      formData.append(key, this.state.product[key])
-    );
+
+    console.log("Current product state:", this.state.product); // Debug: Log state
+
+    // Append all text fields from the product to FormData
+    Object.keys(this.state.product).forEach((key) => {
+      formData.append(key, this.state.product[key]);
+      console.log(`Appending ${key}:`, this.state.product[key]); // Debug: Log each field value
+    });
+
+    // Initialize an empty object to hold the formData entries
+    let formDataObject = {};
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+      formDataObject[pair[0]] = pair[1];
+    }
+    // Check if there's a file selected and append it to FormData
     if (this.state.selectedFile) {
-      formData.append("file", this.state.selectedFile);
+      const file =
+        this.state.selectedFile instanceof FileList
+          ? this.state.selectedFile[0]
+          : this.state.selectedFile;
+      formDataObject.file_path = `products/${file.name}`; // Creating a custom path format
+      console.log("Appending file:", file); // Debug: Log file append
     }
 
+    // Log each formData entry and store them in the object
+
+    // Now formDataObject contains all the formData entries as key-value pairs
+    console.log("Complete formData Object:", formDataObject);
+
+    if (!formData) {
+      console.log("FormData is empty");
+      return;
+    }
+    console.log(formData, "FormData");
+    // Perform the PUT request with axios
     axios
-      .put(`http://127.0.0.1:8000/api/update/${id}`, formData)
+      .patch(`http://127.0.0.1:8000/api/update/${id}`, formDataObject)
       .then((response) => {
-        console.log(response.data);
+        console.log("Update response:", response.data); // Debug: Log response data
+        this.setState({
+          product: {
+            name: response.data.name || "",
+            description: response.data.description || "",
+            price: response.data.price || "",
+            file_path: response.data.file_path || "",
+          },
+        });
         this.props.history.push("/favourite"); // Redirect to the favourite page after update
       })
       .catch((error) => {
-        console.error("There was an error!", error);
+        console.error("Update error:", error);
       });
   };
 
   render() {
-    const { product } = this.state;
+    const { imagePreviewUrl, product } = this.state;
 
     return (
       <Fragment>
@@ -80,7 +132,7 @@ class Notification extends Component {
               <Form.Control
                 type="text"
                 name="name"
-                value={product.name}
+                value={this.state.product.name}
                 onChange={this.handleInputChange}
               />
             </Form.Group>
@@ -90,7 +142,7 @@ class Notification extends Component {
               <Form.Control
                 type="text"
                 name="description"
-                value={product.description}
+                value={this.state.product.description}
                 onChange={this.handleInputChange}
               />
             </Form.Group>
@@ -100,7 +152,7 @@ class Notification extends Component {
               <Form.Control
                 type="number"
                 name="price"
-                value={product.price}
+                value={this.state.product.price}
                 onChange={this.handleInputChange}
               />
             </Form.Group>
@@ -109,7 +161,7 @@ class Notification extends Component {
               <Form.Label>Product Image</Form.Label>
               <Form.Control
                 type="file"
-                name="file"
+                name="file_path"
                 onChange={this.handleFileChange}
               />
             </Form.Group>
@@ -118,6 +170,16 @@ class Notification extends Component {
               <div className="text-center my-3">
                 <img
                   src={`http://127.0.0.1:8000/storage/${product.file_path}`}
+                  alt="Product"
+                  style={{ width: "100px", height: "100px" }}
+                />
+              </div>
+            )}
+
+            {imagePreviewUrl && (
+              <div className="text-center my-3">
+                <img
+                  src={imagePreviewUrl}
                   alt="Product"
                   style={{ width: "100px", height: "100px" }}
                 />

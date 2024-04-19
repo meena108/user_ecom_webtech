@@ -14,7 +14,14 @@ class Favourite extends Component {
     this.fetchProducts();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.fetchProducts();
+    }
+  }
+
   fetchProducts = (searchKey = "") => {
+    const timestamp = Date.now();
     const url = searchKey
       ? `http://127.0.0.1:8000/api/search/${searchKey}`
       : "http://127.0.0.1:8000/api/list";
@@ -31,6 +38,18 @@ class Favourite extends Component {
 
   delete = (id) => {
     fetch(`http://127.0.0.1:8000/api/delete/${id}`, { method: "DELETE" })
+      .then(() => this.fetchProducts())
+      .catch((error) => console.error("Error:", error));
+  };
+
+  updateProduct = (id, updatedProduct) => {
+    fetch(`http://127.0.0.1:8000/api/update/${id}?_method=PUT`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedProduct),
+    })
       .then(() => this.fetchProducts())
       .catch((error) => console.error("Error:", error));
   };
